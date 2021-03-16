@@ -1,0 +1,28 @@
+{
+  "name": "token-vesting",
+  "version": "1.0.0",
+  "description": "token-vesting",
+  "author": "8pay",
+  "scripts": {
+    "test": "truffle test",
+    "coverage": "truffle run coverage --network development",
+    "lint:js": "eslint --ignore-path .gitignore .",
+    "lint:js:fix": "eslint --ignore-path .gitignore . --fix"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@openzeppelin/contracts": "^4.0.0",
+    "@openzeppelin/test-helpers": "^0.5.10",
+    "@truffle/hdwallet-provider": "1.2.2",
+    "eslint": "^7.22.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-mocha-no-only": "^1.1.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-standard": "^5.0.0",
+    "solidity-coverage": "^0.7.16",
+    "truffle": "^5.2.5",
+    "truffle-deployments": "^0.1.1"
+  }
+}

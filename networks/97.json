@@ -1,0 +1,37 @@
+[
+  {
+    "contract": "AdvisorsVesting",
+    "address": "0x29E1bE5BBc48E398d11359bebf2439A3a2DF21C2",
+    "transactionHash": "0x4e18753b6d13f8791a4a92fdf205d1b4f1f868e710149afb7083c4b032ceaddb"
+  },
+  {
+    "contract": "FoundersVesting",
+    "address": "0x1614910445aBB96DB2a5043C1442d1CE99DC221d",
+    "transactionHash": "0xa28a48e4d3bea661fd0f689294c43aff59d7eab36ce3d66d1273c8d21cbbbce7"
+  },
+  {
+    "contract": "MarketingVesting",
+    "address": "0x3D7c0EE4a22234C6033b25c9c47ffd611cda10aa",
+    "transactionHash": "0x6aa9ddd0589469f1ec8097c9fd253da6d53f5a6ef3e9308485d87f08a1dfc7d2"
+  },
+  {
+    "contract": "Migrations",
+    "address": "0x53CE2D9155d3Eb88D08B040b948cCa869d13b29F",
+    "transactionHash": "0x50ddfffcdf7a399ace7a70902122ec049bcec7c31295a71b2bf7b41f25bc8473"
+  },
+  {
+    "contract": "PrivateSale1Vesting",
+    "address": "0xb893e179B14828A72864cF4A3C02b286366E9188",
+    "transactionHash": "0xb568f3ce49e16d8801ce2dacc0aedacd89a4d743bbb05c4dda5941ac0f7dd17c"
+  },
+  {
+    "contract": "PrivateSale2Vesting",
+    "address": "0xAcB26CAe2B54aaD35e6009778b26C914Cc10E69E",
+    "transactionHash": "0xeb86124e715c6490d293420d3240b2e1e48155af842bf4e7eb73dade3ceb03fc"
+  },
+  {
+    "contract": "PublicSaleVesting",
+    "address": "0xAeD0E5495A05768F56985cA10cA38CC2cf4490c1",
+    "transactionHash": "0x9fe8f2cd707b205df202daf4223700e83072ab4e464720eeac6faa97d5308db3"
+  }
+]
