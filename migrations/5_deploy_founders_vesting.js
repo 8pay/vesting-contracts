@@ -10,6 +10,6 @@ module.exports = async function (deployer, network) {
 
   const foundersVesting = await FoundersVesting.deployed();
 
-  await foundersVesting.grantTokens(grants.map(e => e.address), grants.map(e => e.amount));
+  await foundersVesting.allocateTokens(grants.map(e => e.address), grants.map(e => e.amount));
   await foundersVesting.transferOwnership(owner[network].address);
 };

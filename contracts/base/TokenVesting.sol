@@ -10,10 +10,10 @@ contract TokenVesting is Ownable {
     uint256 public duration;
     uint256 public initialReleasePercentage;
 
-    mapping (address => uint256) private grantedTokens;
+    mapping (address => uint256) private allocatedTokens;
     mapping (address => uint256) private claimedTokens;
 
-    event TokensGranted(address indexed beneficiary, uint256 value);
+    event TokensAllocated(address indexed beneficiary, uint256 value);
     event TokensClaimed(address indexed beneficiary, uint256 value);
 
 	constructor(
@@ -28,7 +28,7 @@ contract TokenVesting is Ownable {
         initialReleasePercentage = _initialReleasePercentage;
 	}
 
-    function grantTokens(address[] memory _beneficiaries, uint256[] memory _amounts)
+    function allocateTokens(address[] memory _beneficiaries, uint256[] memory _amounts)
         public
         onlyOwner
     {
@@ -39,14 +39,14 @@ contract TokenVesting is Ownable {
 
         for (uint256 i = 0; i < _beneficiaries.length; i++) {
             require(_beneficiaries[i] != address(0), "Vesting: beneficiary is 0 address");
-            grantedTokens[_beneficiaries[i]] = _amounts[i];
+            allocatedTokens[_beneficiaries[i]] = _amounts[i];
 
-            emit TokensGranted(_beneficiaries[i], _amounts[i]);
+            emit TokensAllocated(_beneficiaries[i], _amounts[i]);
         }
     }
 
-    function getGrantedTokens(address _beneficiary) public view returns (uint256 amount) {
-        return grantedTokens[_beneficiary];
+    function getAllocatedTokens(address _beneficiary) public view returns (uint256 amount) {
+        return allocatedTokens[_beneficiary];
     }
 
     function getClaimedTokens(address _beneficiary) public view returns (uint256 amount) {
@@ -70,11 +70,11 @@ contract TokenVesting is Ownable {
         uint256 elapsedTime = _timestamp - start;
 
         if (elapsedTime >= duration) {
-            return grantedTokens[_beneficiary];
+            return allocatedTokens[_beneficiary];
         }
 
-        uint256 initialRelease = grantedTokens[_beneficiary] * initialReleasePercentage / 100;
-        uint256 remainingTokensAfterInitialRelease = grantedTokens[_beneficiary] - initialRelease;
+        uint256 initialRelease = allocatedTokens[_beneficiary] * initialReleasePercentage / 100;
+        uint256 remainingTokensAfterInitialRelease = allocatedTokens[_beneficiary] - initialRelease;
         uint256 subsequentRelease = remainingTokensAfterInitialRelease * elapsedTime / duration;
         uint256 totalReleasedTokens = initialRelease + subsequentRelease;
 

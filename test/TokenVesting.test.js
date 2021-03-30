@@ -8,7 +8,7 @@ contract('TokenVesting', (accounts) => {
   const [owner, beneficiary, nonOwner] = accounts;
   const initialReleasePercentage = new BN(10);
   const duration = time.duration.days(120);
-  const grantedTokens = new BN(web3.utils.toWei('1', 'ether'));
+  const allocatedTokens = new BN(web3.utils.toWei('1', 'ether'));
 
   beforeEach(async () => {
     this.token = await MockToken.new();
@@ -44,31 +44,31 @@ contract('TokenVesting', (accounts) => {
     expect(await this.vesting.initialReleasePercentage()).to.be.bignumber.equal(initialReleasePercentage);
   });
 
-  describe('when tokens are not granted', async () => {
-    it('should grant some tokens', async () => {
-      await this.vesting.grantTokens([beneficiary], [grantedTokens]);
-      const actualGrantedTokens = await this.vesting.getGrantedTokens(beneficiary);
+  describe('when tokens are not allocated', async () => {
+    it('should allocate some tokens', async () => {
+      await this.vesting.allocateTokens([beneficiary], [allocatedTokens]);
+      const actualAllocatedTokens = await this.vesting.getAllocatedTokens(beneficiary);
 
-      expect(actualGrantedTokens).to.be.bignumber.equal(grantedTokens);
+      expect(actualAllocatedTokens).to.be.bignumber.equal(allocatedTokens);
     });
 
-    it('reverts when calling the grant function with different array lengts', async () => {
+    it('reverts when calling the allocate function with different array lengts', async () => {
       await expectRevert(
-        this.vesting.grantTokens([beneficiary], []),
+        this.vesting.allocateTokens([beneficiary], []),
         'Vesting: beneficiaries and amounts length mismatch',
       );
     });
 
-    it('reverts when granting tokens to the 0 address', async () => {
+    it('reverts when allocating tokens to the 0 address', async () => {
       await expectRevert(
-        this.vesting.grantTokens([constants.ZERO_ADDRESS], [grantedTokens]),
+        this.vesting.allocateTokens([constants.ZERO_ADDRESS], [allocatedTokens]),
         'Vesting: beneficiary is 0 address',
       );
     });
 
-    it('reverts when granting tokens from non-owner address', async () => {
+    it('reverts when allocating tokens from non-owner address', async () => {
       await expectRevert(
-        this.vesting.grantTokens([beneficiary], [grantedTokens], { from: nonOwner }),
+        this.vesting.allocateTokens([beneficiary], [allocatedTokens], { from: nonOwner }),
         'Ownable: caller is not the owner',
       );
     });
@@ -111,15 +111,15 @@ contract('TokenVesting', (accounts) => {
     });
   });
 
-  describe('when tokens are granted', () => {
+  describe('when tokens are allocated', () => {
     beforeEach(async () => {
-      const { logs } = await this.vesting.grantTokens([beneficiary], [grantedTokens]);
+      const { logs } = await this.vesting.allocateTokens([beneficiary], [allocatedTokens]);
 
       this.logs = logs;
     });
 
-    it('emits TokensGranted event', async () => {
-      expectEvent.inLogs(this.logs, 'TokensGranted', { beneficiary: beneficiary, value: grantedTokens });
+    it('emits TokensAllocated event', async () => {
+      expectEvent.inLogs(this.logs, 'TokensAllocated', { beneficiary: beneficiary, value: allocatedTokens });
     });
 
     describe('token release', () => {
@@ -135,7 +135,7 @@ contract('TokenVesting', (accounts) => {
       describe('on start', () => {
         it('released token should be equal to the inital release', async () => {
           const timestamp = this.start;
-          const expectedReleasedTokens = grantedTokens.mul(initialReleasePercentage).div(new BN(100));
+          const expectedReleasedTokens = allocatedTokens.mul(initialReleasePercentage).div(new BN(100));
           const actualReleasedTokens = await this.vesting.getReleasedTokensAtTimestamp(beneficiary, timestamp);
 
           expect(actualReleasedTokens).to.be.bignumber.equal(expectedReleasedTokens);
@@ -147,8 +147,9 @@ contract('TokenVesting', (accounts) => {
           const halfDuration = new BN(duration / 2);
           const durationPercentage = new BN(50);
           const timestamp = this.start.add(halfDuration);
-          const initialReleasedTokens = grantedTokens.mul(initialReleasePercentage).div(new BN(100));
-          const newlyReleaseTokens = grantedTokens.sub(initialReleasedTokens).mul(durationPercentage).div(new BN(100));
+          const initialReleasedTokens = allocatedTokens.mul(initialReleasePercentage).div(new BN(100));
+          const newlyReleaseTokens = allocatedTokens
+            .sub(initialReleasedTokens).mul(durationPercentage).div(new BN(100));
           const expectedReleasedTokens = initialReleasedTokens.add(newlyReleaseTokens);
           const actualReleasedTokens = await this.vesting.getReleasedTokensAtTimestamp(beneficiary, timestamp);
 
@@ -157,11 +158,11 @@ contract('TokenVesting', (accounts) => {
       });
 
       describe('on end', () => {
-        it('release tokens should be equal to total granted tokens', async () => {
+        it('release tokens should be equal to total allocated tokens', async () => {
           const timestamp = this.start.add(duration);
           const actualReleasedTokens = await this.vesting.getReleasedTokensAtTimestamp(beneficiary, timestamp);
 
-          expect(actualReleasedTokens).to.be.bignumber.equal(grantedTokens);
+          expect(actualReleasedTokens).to.be.bignumber.equal(allocatedTokens);
         });
       });
     });
@@ -292,7 +293,7 @@ contract('TokenVesting', (accounts) => {
                   const beneficiaryInitialBalance = await this.token.balanceOf(beneficiary);
                   const contractInitialBalance = await this.token.balanceOf(this.vesting.address);
                   await this.vesting.claimTokens([beneficiary]);
-                  const expectedClaimedTokens = grantedTokens.sub(this.claimedTokens);
+                  const expectedClaimedTokens = allocatedTokens.sub(this.claimedTokens);
                   const beneficiaryFinalBalance = await this.token.balanceOf(beneficiary);
                   const contractFinalBalance = await this.token.balanceOf(this.vesting.address);
 
