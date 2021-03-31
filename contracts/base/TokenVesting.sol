@@ -45,6 +45,18 @@ contract TokenVesting is Ownable {
         }
     }
 
+    function claimTokens(address[] memory _beneficiaries) public {
+        for (uint256 i = 0; i < _beneficiaries.length; i++) {
+            uint256 claimableTokens = getClaimableTokens(_beneficiaries[i]);
+            require(claimableTokens > 0, "Vesting: no claimable tokens");
+
+            claimedTokens[_beneficiaries[i]] += claimableTokens;
+            token.transfer(_beneficiaries[i], claimableTokens);
+
+            emit TokensClaimed(_beneficiaries[i], claimableTokens);
+        }
+    }
+
     function getAllocatedTokens(address _beneficiary) public view returns (uint256 amount) {
         return allocatedTokens[_beneficiary];
     }
@@ -79,17 +91,5 @@ contract TokenVesting is Ownable {
         uint256 totalReleasedTokens = initialRelease + subsequentRelease;
 
         return totalReleasedTokens;
-    }
-
-    function claimTokens(address[] memory _beneficiaries) public {
-        for (uint256 i = 0; i < _beneficiaries.length; i++) {
-            uint256 claimableTokens = getClaimableTokens(_beneficiaries[i]);
-            require(claimableTokens > 0, "Vesting: no claimable tokens");
-
-            claimedTokens[_beneficiaries[i]] += claimableTokens;
-            token.transfer(_beneficiaries[i], claimableTokens);
-
-            emit TokensClaimed(_beneficiaries[i], claimableTokens);
-        }
     }
 }
