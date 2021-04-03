@@ -9,7 +9,7 @@ contract PrivateSale2Vesting is TokenVesting {
     uint256 constant INITIAL_RELEASE_PERCENTAGE = 15;
 
 	constructor(
-        IERC20 _token,
-        uint256 _start
-    ) TokenVesting(_token, _start, DURATION, INITIAL_RELEASE_PERCENTAGE) {}
+        IERC20 token,
+        uint256 start
+    ) TokenVesting(token, start, DURATION, INITIAL_RELEASE_PERCENTAGE) {}
 }

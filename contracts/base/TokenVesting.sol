@@ -10,87 +10,87 @@ contract TokenVesting is Ownable {
     uint256 public duration;
     uint256 public initialReleasePercentage;
 
-    mapping (address => uint256) private allocatedTokens;
-    mapping (address => uint256) private claimedTokens;
+    mapping (address => uint256) private _allocatedTokens;
+    mapping (address => uint256) private _claimedTokens;
 
     event TokensAllocated(address indexed beneficiary, uint256 value);
     event TokensClaimed(address indexed beneficiary, uint256 value);
 
 	constructor(
-        IERC20 _token,
-        uint256 _start,
-        uint256 _duration,
-        uint256 _initialReleasePercentage
+        IERC20 token_,
+        uint256 start_,
+        uint256 duration_,
+        uint256 initialReleasePercentage_
     ) {
-        token = _token;
-        start = _start;
-        duration = _duration;
-        initialReleasePercentage = _initialReleasePercentage;
+        token = token_;
+        start = start_;
+        duration = duration_;
+        initialReleasePercentage = initialReleasePercentage_;
 	}
 
-    function allocateTokens(address[] memory _beneficiaries, uint256[] memory _amounts)
+    function allocateTokens(address[] memory beneficiaries, uint256[] memory amounts)
         public
         onlyOwner
     {
         require(
-            _beneficiaries.length == _amounts.length, 
+            beneficiaries.length == amounts.length, 
             "Vesting: beneficiaries and amounts length mismatch"
         );
 
-        for (uint256 i = 0; i < _beneficiaries.length; i++) {
-            require(_beneficiaries[i] != address(0), "Vesting: beneficiary is 0 address");
-            allocatedTokens[_beneficiaries[i]] = _amounts[i];
+        for (uint256 i = 0; i < beneficiaries.length; i++) {
+            require(beneficiaries[i] != address(0), "Vesting: beneficiary is 0 address");
+            _allocatedTokens[beneficiaries[i]] = amounts[i];
 
-            emit TokensAllocated(_beneficiaries[i], _amounts[i]);
+            emit TokensAllocated(beneficiaries[i], amounts[i]);
         }
     }
 
-    function claimTokens(address[] memory _beneficiaries) public {
-        for (uint256 i = 0; i < _beneficiaries.length; i++) {
-            uint256 claimableTokens = getClaimableTokens(_beneficiaries[i]);
+    function claimTokens(address[] memory beneficiaries) public {
+        for (uint256 i = 0; i < beneficiaries.length; i++) {
+            uint256 claimableTokens = getClaimableTokens(beneficiaries[i]);
             require(claimableTokens > 0, "Vesting: no claimable tokens");
 
-            claimedTokens[_beneficiaries[i]] += claimableTokens;
-            token.transfer(_beneficiaries[i], claimableTokens);
+            _claimedTokens[beneficiaries[i]] += claimableTokens;
+            token.transfer(beneficiaries[i], claimableTokens);
 
-            emit TokensClaimed(_beneficiaries[i], claimableTokens);
+            emit TokensClaimed(beneficiaries[i], claimableTokens);
         }
     }
 
-    function emergencyWithdraw(IERC20 _token, address _recipient) public onlyOwner {
-        _token.transfer(_recipient, _token.balanceOf(address(this)));
+    function emergencyWithdraw(IERC20 erc20, address recipient) public onlyOwner {
+        erc20.transfer(recipient, erc20.balanceOf(address(this)));
     }
 
-    function getAllocatedTokens(address _beneficiary) public view returns (uint256 amount) {
-        return allocatedTokens[_beneficiary];
+    function getAllocatedTokens(address beneficiary) public view returns (uint256 amount) {
+        return _allocatedTokens[beneficiary];
     }
 
-    function getClaimedTokens(address _beneficiary) public view returns (uint256 amount) {
-        return claimedTokens[_beneficiary];
+    function getClaimedTokens(address beneficiary) public view returns (uint256 amount) {
+        return _claimedTokens[beneficiary];
     }
 
-    function getClaimableTokens(address _beneficiary) public view returns (uint256 amount) {
-        uint256 releasedTokens = getReleasedTokensAtTimestamp(_beneficiary, block.timestamp);
-        return releasedTokens - claimedTokens[_beneficiary];
+    function getClaimableTokens(address beneficiary) public view returns (uint256 amount) {
+        uint256 releasedTokens = getReleasedTokensAtTimestamp(beneficiary, block.timestamp);
+        return releasedTokens - _claimedTokens[beneficiary];
     }
 
-    function getReleasedTokensAtTimestamp(address _beneficiary, uint256 _timestamp) 
+    function getReleasedTokensAtTimestamp(address beneficiary, uint256 timestamp) 
         public
         view
         returns (uint256 amount)
     {
-        if (_timestamp < start) {
+        if (timestamp < start) {
             return 0;
         }
         
-        uint256 elapsedTime = _timestamp - start;
+        uint256 elapsedTime = timestamp - start;
 
         if (elapsedTime >= duration) {
-            return allocatedTokens[_beneficiary];
+            return _allocatedTokens[beneficiary];
         }
 
-        uint256 initialRelease = allocatedTokens[_beneficiary] * initialReleasePercentage / 100;
-        uint256 remainingTokensAfterInitialRelease = allocatedTokens[_beneficiary] - initialRelease;
+        uint256 initialRelease = _allocatedTokens[beneficiary] * initialReleasePercentage / 100;
+        uint256 remainingTokensAfterInitialRelease = _allocatedTokens[beneficiary] - initialRelease;
         uint256 subsequentRelease = remainingTokensAfterInitialRelease * elapsedTime / duration;
         uint256 totalReleasedTokens = initialRelease + subsequentRelease;
 
