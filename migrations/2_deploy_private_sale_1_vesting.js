@@ -4,7 +4,7 @@ const allocations = require('../data/allocations').privateSale1;
 const owner = require('../data/owner');
 
 module.exports = async function (deployer, network) {
-  const start = Math.floor(Date.now() / 1000);
+  const start = 1617638400;
 
   await deployer.deploy(PrivateSale1Vesting, tokenContract[network].address, start);
 
