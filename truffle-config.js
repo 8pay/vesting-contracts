@@ -20,8 +20,8 @@ module.exports = {
       timeoutBlocks: 200,
       skipDryRun: true,
     },
-    bsc: {
-      provider: () => new HDWalletProvider(mnemonic, 'wss://bsc-dataseed1.binance.org'),
+    mainnet: {
+      provider: () => new HDWalletProvider(mnemonic, 'https://bsc-dataseed1.ninicoin.io/'),
       network_id: 56,
       confirmations: 10,
       networkCheckTimeout: 1000000,
