@@ -1,6 +1,6 @@
 const PrivateSale2Vesting = artifacts.require('PrivateSale2Vesting');
 const tokenContract = require('../data/token-contract');
-const grants = require('../data/grants').privateSale2;
+const allocations = require('../data/allocations').privateSale2;
 const owner = require('../data/owner');
 
 module.exports = async function (deployer, network) {
@@ -10,6 +10,6 @@ module.exports = async function (deployer, network) {
 
   const privateSale2Vesting = await PrivateSale2Vesting.deployed();
 
-  await privateSale2Vesting.allocateTokens(grants.map(e => e.address), grants.map(e => e.amount));
+  await privateSale2Vesting.allocateTokens(allocations.map(e => e.address), allocations.map(e => e.amount));
   await privateSale2Vesting.transferOwnership(owner[network].address);
 };
