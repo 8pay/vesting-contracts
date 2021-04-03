@@ -5,8 +5,8 @@ import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { TokenVesting } from "./base/TokenVesting.sol";
 
 contract PrivateSale1Vesting is TokenVesting {
-    uint256 constant DURATION = 180 days;
-    uint256 constant INITIAL_RELEASE_PERCENTAGE = 10;
+    uint256 public constant DURATION = 180 days;
+    uint256 public constant INITIAL_RELEASE_PERCENTAGE = 10;
 
 	constructor(
         IERC20 token,
