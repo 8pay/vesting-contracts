@@ -10,6 +10,8 @@ contract PrivateSale2Vesting is TokenVesting {
 
 	constructor(
         IERC20 token,
-        uint256 start
-    ) TokenVesting(token, start, DURATION, INITIAL_RELEASE_PERCENTAGE) {}
+        uint256 start,
+        address[] memory beneficiaries,
+        uint256[] memory amounts
+    ) TokenVesting(token, start, DURATION, INITIAL_RELEASE_PERCENTAGE, beneficiaries, amounts) {}
 }

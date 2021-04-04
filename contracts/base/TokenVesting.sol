@@ -3,9 +3,8 @@ pragma solidity 0.8.3;
 
 import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 
-contract TokenVesting is Ownable {
+contract TokenVesting {
     using SafeERC20 for IERC20;
 
     IERC20 public token;
@@ -23,30 +22,17 @@ contract TokenVesting is Ownable {
         IERC20 token_,
         uint256 start_,
         uint256 duration_,
-        uint256 initialReleasePercentage_
+        uint256 initialReleasePercentage_,
+        address[] memory beneficiaries_,
+        uint256[] memory amounts_
     ) {
         token = token_;
         start = start_;
         duration = duration_;
         initialReleasePercentage = initialReleasePercentage_;
+
+        _allocateTokens(beneficiaries_, amounts_);
 	}
-
-    function allocateTokens(address[] memory beneficiaries, uint256[] memory amounts)
-        public
-        onlyOwner
-    {
-        require(
-            beneficiaries.length == amounts.length, 
-            "Vesting: beneficiaries and amounts length mismatch"
-        );
-
-        for (uint256 i = 0; i < beneficiaries.length; i++) {
-            require(beneficiaries[i] != address(0), "Vesting: beneficiary is 0 address");
-            _allocatedTokens[beneficiaries[i]] = amounts[i];
-
-            emit TokensAllocated(beneficiaries[i], amounts[i]);
-        }
-    }
 
     function claimTokens(address[] memory beneficiaries) public {
         for (uint256 i = 0; i < beneficiaries.length; i++) {
@@ -94,5 +80,21 @@ contract TokenVesting is Ownable {
         uint256 totalReleasedTokens = initialRelease + subsequentRelease;
 
         return totalReleasedTokens;
+    }
+
+    function _allocateTokens(address[] memory beneficiaries, uint256[] memory amounts)
+        internal
+    {
+        require(
+            beneficiaries.length == amounts.length, 
+            "Vesting: beneficiaries and amounts length mismatch"
+        );
+
+        for (uint256 i = 0; i < beneficiaries.length; i++) {
+            require(beneficiaries[i] != address(0), "Vesting: beneficiary is 0 address");
+            _allocatedTokens[beneficiaries[i]] = amounts[i];
+
+            emit TokensAllocated(beneficiaries[i], amounts[i]);
+        }
     }
 }
