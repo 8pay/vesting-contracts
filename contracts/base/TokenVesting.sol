@@ -57,10 +57,6 @@ contract TokenVesting is Ownable {
         }
     }
 
-    function emergencyWithdraw(IERC20 erc20, address recipient) public onlyOwner {
-        erc20.transfer(recipient, erc20.balanceOf(address(this)));
-    }
-
     function getAllocatedTokens(address beneficiary) public view returns (uint256 amount) {
         return _allocatedTokens[beneficiary];
     }

@@ -48,24 +48,6 @@ contract('TokenVesting', (accounts) => {
     expect(await this.vesting.initialReleasePercentage()).to.be.bignumber.equal(initialReleasePercentage);
   });
 
-  it('should perform an emergency withdraw', async () => {
-    const contractInitialBalance = await this.token.balanceOf(this.vesting.address);
-    const recipientInitialBalance = await this.token.balanceOf(owner);
-    await this.vesting.emergencyWithdraw(this.token.address, owner);
-    const contractFinalBalance = await this.token.balanceOf(this.vesting.address);
-    const recipientFinalBalance = await this.token.balanceOf(owner);
-
-    expect(contractFinalBalance).to.be.bignumber.equal('0');
-    expect(recipientFinalBalance).to.be.bignumber.equal(recipientInitialBalance.add(contractInitialBalance));
-  });
-
-  it('reverts when performing an emergency withdraw from non-owner', async () => {
-    await expectRevert(
-      this.vesting.emergencyWithdraw(this.token.address, owner, { from: nonOwner }),
-      'Ownable: caller is not the owner',
-    );
-  });
-
   describe('when tokens are not allocated', async () => {
     it('should allocate some tokens', async () => {
       await this.vesting.allocateTokens(
