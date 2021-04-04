@@ -9,9 +9,16 @@ contract PrivateSale1Vesting is TokenVesting {
     uint256 public constant INITIAL_RELEASE_PERCENTAGE = 10;
 
 	constructor(
-        IERC20 token,
-        uint256 start,
-        address[] memory beneficiaries,
-        uint256[] memory amounts
-    ) TokenVesting(token, start, DURATION, INITIAL_RELEASE_PERCENTAGE, beneficiaries, amounts) {}
+        IERC20 token_,
+        uint256 start_,
+        address[] memory beneficiaries_,
+        uint256[] memory amounts_
+    ) TokenVesting(
+        token_, 
+        start_, 
+        DURATION, 
+        INITIAL_RELEASE_PERCENTAGE, 
+        beneficiaries_, 
+        amounts_
+    ) {}
 }
