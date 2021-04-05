@@ -111,4 +111,40 @@ module.exports = {
       amount: tokens('125000.00'),
     },
   ],
+  seed: [
+    {
+      address: '0x9e70086f32a0a45470486a56efdcb8173746cf92',
+      amount: tokens('8888888.8'),
+    },
+  ],
+  founders: [
+    {
+      address: '0x52be9a7d24Ef3bf175E9888089ec64031803B639',
+      amount: tokens('15111110.96'),
+    },
+  ],
+  advisors: [
+    {
+      address: '0x95c22F7B7B66865fBcf0FD03f557e742dddE5B7F',
+      amount: tokens('6222222.16'),
+    },
+  ],
+  marketing: [
+    {
+      address: '0xe4EF192Ab928991E4B61F14827B7cBC55Cd0CBb4',
+      amount: tokens('4444444.4'),
+    },
+  ],
+  staking: [
+    {
+      address: '0xd00E4f42432990d67823Be2e2E1F1CCFEaD58366',
+      amount: tokens('7111111.04'),
+    },
+  ],
+  strategicReserve: [
+    {
+      address: '0x5c8b37767f4D1359fb9785611F0FF8a79D5FfB8E',
+      amount: tokens('7111111.04'),
+    },
+  ],
 };
