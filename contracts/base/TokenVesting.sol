@@ -12,8 +12,8 @@ contract TokenVesting {
     uint256 public duration;
     uint256 public initialReleasePercentage;
 
-    mapping (address => uint256) private _allocatedTokens;
-    mapping (address => uint256) private _claimedTokens;
+    mapping (address => uint256) internal _allocatedTokens;
+    mapping (address => uint256) internal _claimedTokens;
 
     event TokensAllocated(address indexed beneficiary, uint256 value);
     event TokensClaimed(address indexed beneficiary, uint256 value);
