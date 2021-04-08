@@ -1,0 +1,47 @@
+[
+  {
+    "contract": "AdvisorsVesting",
+    "address": "0x95b594800269F907428E475dECf7D248863335A1",
+    "transactionHash": "0x1b3b30714e699428c29a1f772cca500cf4a0f0e7dfa53e65a7aeeaaa37e164df"
+  },
+  {
+    "contract": "FoundersVesting",
+    "address": "0xcF078fF740F1Dd0180021981145f919C69e47c8a",
+    "transactionHash": "0x37eb155c1dd949909840c9f135921999ccdf5dee0b6fe87c266e910941909106"
+  },
+  {
+    "contract": "MarketingVesting",
+    "address": "0x2F2644EaDe845273F16d6B63aB32cE4dCf7f48Cd",
+    "transactionHash": "0x8c1693f6adde9550af36bdfdcf11c2c977e2d301f86441bb7d7c7889d44db9ea"
+  },
+  {
+    "contract": "Migrations",
+    "address": "0x5ea9A1f18F856290157394c900A783988472d5cf",
+    "transactionHash": "0x2017ad332a1e30d596373612a347523824a279baa60050cf68efa4d7a886441e"
+  },
+  {
+    "contract": "PrivateSale1Vesting",
+    "address": "0x2Bb27b5D135DE17c90d87A6666e74B621E7168FC",
+    "transactionHash": "0x0bdac80833eb9ff84537bc57ba21c7e86d7b36bd62c2170cb34275595738d645"
+  },
+  {
+    "contract": "PrivateSale2Vesting",
+    "address": "0xbAB37D86300DC9B152f02099f12FeDbaC03Fb632",
+    "transactionHash": "0xee3cc56e323a6127a88f69702ee428b1a885e68a837105623bc7f0eee363e79e"
+  },
+  {
+    "contract": "SeedVesting",
+    "address": "0xa89dECBE2e1736579A71B5dA222d6B3a8f8C0d36",
+    "transactionHash": "0x7908c53e6a1f196856ac0091390d03a7137cf6b537dd83d564c17e2801723cc4"
+  },
+  {
+    "contract": "StakingVesting",
+    "address": "0x7e4953C65CC47B40CBBA7AF00220FAC35e739Af6",
+    "transactionHash": "0x0d6b9324f2ced874e305b0f2a538bac55c9b9051ba7bdec47b68772f50d951e8"
+  },
+  {
+    "contract": "StrategicReserveVesting",
+    "address": "0x7156090dEfc45C81A74e446f8005Fb101486e4Cc",
+    "transactionHash": "0x2cec1de95f466717fc67c9da121ac2f1a30d907a5c15b75b1501171004ba7070"
+  }
+]
