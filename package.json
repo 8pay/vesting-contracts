@@ -1,7 +1,7 @@
 {
   "name": "vesting-contracts",
   "version": "1.0.0",
-  "description": "token-vesting",
+  "description": "Vesting smart contracts to release 8PAY tokens according to the tokenomics.",
   "author": "8pay",
   "scripts": {
     "test": "truffle test",
