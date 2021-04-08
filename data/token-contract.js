@@ -3,7 +3,7 @@ module.exports = {
     address: '0x0000000000000000000000000000000000000000',
   },
   testnet: {
-    address: '0xbcfee3c6de134d2db1fa7341615cab8ab082196e',
+    address: '0x0d338e1a67966c995d754e06bd53fa5e59c1988b',
   },
   mainnet: {
     address: '0xFeea0bDd3D07eb6FE305938878C0caDBFa169042',
