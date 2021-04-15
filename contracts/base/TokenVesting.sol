@@ -18,7 +18,7 @@ contract TokenVesting {
     event TokensAllocated(address indexed beneficiary, uint256 value);
     event TokensClaimed(address indexed beneficiary, uint256 value);
 
-	constructor(
+    constructor(
         IERC20 token_,
         uint256 start_,
         uint256 duration_,
@@ -32,7 +32,7 @@ contract TokenVesting {
         initialReleasePercentage = initialReleasePercentage_;
 
         _allocateTokens(beneficiaries_, amounts_);
-	}
+    }
 
     function claimTokens(address[] memory beneficiaries) public {
         for (uint256 i = 0; i < beneficiaries.length; i++) {

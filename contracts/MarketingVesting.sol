@@ -8,7 +8,7 @@ contract MarketingVesting is TokenVesting {
     uint256 internal constant _DURATION = 300 days;
     uint256 internal constant _INITIAL_RELEASE_PERCENTAGE = 10;
 
-	constructor(
+    constructor(
         IERC20 token_,
         uint256 start_,
         address[] memory beneficiaries_,

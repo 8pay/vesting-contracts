@@ -8,7 +8,7 @@ contract StakingVesting is TokenVesting {
     uint256 internal constant _DURATION = 0 days;
     uint256 internal constant _INITIAL_RELEASE_PERCENTAGE = 100;
 
-	constructor(
+    constructor(
         IERC20 token_,
         uint256 start_,
         address[] memory beneficiaries_,
