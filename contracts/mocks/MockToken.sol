@@ -7,11 +7,11 @@ import { ERC20 } from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
  * @dev Mock token used for testing.
  */
 contract MockToken is ERC20 {
-    string internal constant NAME = "Mock Token";
-    string internal constant SYMBOL = "MOCK";
-    uint256 internal constant TOTAL_SUPPLY = 3000000 * 10**18;
+    string internal constant _NAME = "Mock Token";
+    string internal constant _SYMBOL = "MOCK";
+    uint256 internal constant _TOTAL_SUPPLY = 3000000 * 10**18;
 
-    constructor() ERC20(NAME, SYMBOL) {
-        _mint(msg.sender, TOTAL_SUPPLY);
+    constructor() ERC20(_NAME, _SYMBOL) {
+        _mint(msg.sender, _TOTAL_SUPPLY);
     }
 }
